@@ -12,6 +12,13 @@ export default class UserManager{
         return user
     }
 
+    getUsers = async (req, res, next) => {
+        const users = await userModel.find({})
+        //console.log(users)
+        if (!users) return `Usuarios no encontrados.`
+        return next(users)
+    }
+
     updateUser = async (email, userRole) => {
         const user = await this.getUser(email)
         if (user === process.env.ADMIN_EMAIL) {

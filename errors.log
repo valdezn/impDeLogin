@@ -74,3 +74,6 @@
 {"level":"error","message":"Error de autorización en el método POST en /premium/6516edbc57b0c62a60782730"}
 {"level":"error","message":"Error de autorización en el método POST en /premium/6516edbc57b0c62a60782730"}
 {"level":"error","message":"Error de autorización en el método POST en /premium/6516edbc57b0c62a60782730"}
+{"level":"error","message":"Error en el método DELETE llamando a 'deleteProductByStockController'. ERROR: MongooseError: Operation `products.findOne()` buffering timed out after 10000ms"}
+{"level":"error","message":"Error en el método DELETE llamando a 'deleteProductByStockController'. ERROR: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client"}
+{"level":"error","message":"Error en el método DELETE llamando a 'deleteProductByStockController'. ERROR: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client"}

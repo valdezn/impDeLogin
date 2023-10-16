@@ -22,8 +22,6 @@ router.post('/requestResetPassword', sessionController.requestResetPassword);
 
 router.post('/premium/', passport.authenticate('jwt', { session: false }), multipleRoles(['admin']), sessionController.updateUser);
 
-router.post('/premium/:uid', passport.authenticate('jwt', { session: false }), filesPremium, sessionController.updateUser);
-
 router.post('/:uid/documents/', passport.authenticate('jwt', { session: false }), uploader.array('file'), sessionController.files);
 
 

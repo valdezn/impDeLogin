@@ -4,7 +4,19 @@ import { ErrorEnum } from "../servicio/error.enum.js";
 import CustomError from "../servicio/customError.js";
 import { generateErrorInfo } from "../servicio/info.js";
 import mongoose from "mongoose";
+import nodemailer from 'nodemailer'
+import UsersController from "./users.controller.js";
 
+const usersController = new UsersController();
+
+const transport = nodemailer.createTransport({
+    service: "gmail",
+    port: 587,
+    auth: {
+      user: process.env.USER_EMAIL,
+      pass: process.env.EMAIL_PASS
+    },
+});
 
 export default class ProductController {
     constructor() {
@@ -133,6 +145,24 @@ export default class ProductController {
             }
 
             const product = await this.productService.deleteProductBySotckService(req.params.pid)
+
+            const userProduct = productOwner.owner
+            const user = await usersController.getUserController(userProduct)
+            const role = user[0].role
+
+            if(userProduct != 'admin' && role === 'premium'){
+
+                    let result = await transport.sendMail({
+                        from: "valdeznoelia26@gmail.com",
+                        to: user[0].email,
+                        subject: "correo test",
+                        html: `
+                        <div style='color:blue'>
+                        <h1>Se ha eliminado un producto que usted creó: ${req.params.pid}</h1>
+                        </div>`, ///el botón funciona sólo en pc
+                    });
+                    result
+                }
             res.send(`Se ha eliminado una unidad del producto ${req.params.pid}.`)
         }catch(error){
             req.logger.error((`Error en el método ${req.method} llamando a 'deleteProductByStockController'. ERROR: ${error}`))
